@@ -1,0 +1,154 @@
+<script>
+    var subTotal = 0;
+    var diskon = 0;
+    var grandTotal = 0;
+
+    let cart = [];
+
+
+    function addkons() {
+        var kons = {
+            kodeBarang: $("#kodeBarang_js").val(),
+            namaBarang: $("#namaBarang_js").val(),
+            satuanBarang: $("#satuanBarang_js").val(),
+            hargaBarang: $("#hargaBarang_js").val(),
+            jumlahBarang: $("#jumlahBarang_js").val(),
+            totalHarga: $("#totalHarga_js").val()
+        };
+        cart = cart.filter(item => item.namaBarang != kons.namaBarang);
+        cart.push(kons);
+        addRow();
+    }
+
+    function addRow() {
+        if (!$('#supplier').val()) {
+            $.alert({
+                title: 'Error',
+                content: "Pilih Supplier Dahulu",
+                type: 'red',
+                autoClose: 'ok|2000'
+            });
+        } else if (!$('#kodeBarang_js').val()) {
+            $.alert({
+                title: 'Error',
+                content: "Pilih Kode Barang Dahulu",
+                type: 'red',
+                autoClose: 'ok|2000'
+            });
+        } else {
+
+            document.getElementById("diskonForm").disabled = false;
+            document.getElementById("tunaiForm").disabled = false;
+
+            var $tableB = $("#konsList tbody");
+            $tableB.html('');
+            subTotal = 0;
+            $('#items').val(JSON.stringify(cart));
+            cart.map(order => {
+                var $row = $(
+                    "<tr>" +
+
+                    "<td align='center'> <button type='button' name='delete' class='btn btn-warning btn-sm' onclick='deleterow(" + order.kodeBarang + ")'>Hapus </td>" +
+                    "<td>" + order.kodeBarang + "</td>" +
+                    "<td>" + order.namaBarang + "</td>" +
+                    "<td>" + order.satuanBarang + "</td>" +
+                    "<td>" + order.hargaBarang + "</td>" +
+                    "<td>" + order.jumlahBarang + "</td>" +
+                    "<td>" + order.totalHarga + "</td>" +
+
+                    "</tr>"
+                );
+
+                $row.data("kodeBarang", order.kodeBarang);
+                $row.data("namaBarang", order.namaBarang);
+                $row.data("satuanBarang", order.satuanBarang);
+                $row.data("hargaBarang", order.hargaBarang);
+                $row.data("jumlahBarang", order.jumlahBarang);
+                $row.data("totalHarga", order.totalHarga);
+
+                $tableB.append($row);
+
+                subTotal += Number(order.totalHarga);
+                $('#subTotalForm').val(subTotal);
+            })
+
+        }
+
+        document.getElementById('diskonForm').value = '';
+        document.getElementById('grandTotalForm').value = '';
+        document.getElementById('tunaiForm').value = '';
+        document.getElementById('kembaliForm').value = '';
+
+        // let inpDiskon = document.getElementById("diskonForm");
+        // let inpTunai = document.getElementById("tunaiForm");
+
+        // if(inpTunai.length < 1 && inpDiskon.length < 1){
+        // console.log("disabled");
+        // document.getElementById("btnSimpan").disabled = true;
+        // }
+        // else{
+        // document.getElementById("btnSimpan").disabled = false;   
+        // }
+    }
+
+    function deleterow(d) {
+        let order = cart.find(item => item.kodeBarang == d)
+        var deleteTotal = order.totalHarga;
+
+        cart = cart.filter(item => item.kodeBarang != d)
+        subTotal -= deleteTotal;
+        $('#subTotalForm').val(subTotal);
+
+        document.getElementById('diskonForm').value = '';
+        document.getElementById('grandTotalForm').value = '';
+        document.getElementById('tunaiForm').value = '';
+        document.getElementById('kembaliForm').value = '';
+        addRow();
+    }
+
+    document.getElementById("nota").onchange = function() {
+        document.getElementById("kodeBarang_js").disabled = false;
+        document.getElementById("jumlahBarang_js").disabled = false;
+        document.getElementById("btnTambah").disabled = false;
+        $('#notaForm').val($('#nota').val())
+        $('#supplierForm').val($('#supplier').val())
+    }
+
+    document.getElementById("kodeBarang_js").onchange = function() {
+        let key = document.getElementById("kodeBarang_js").value;
+        console.log(key);
+        document.getElementById("hargaBarang_js").value = document.getElementById(key + 'harga').value;
+        document.getElementById("namaBarang_js").value = document.getElementById(key + 'namaB').value;
+        document.getElementById("satuanBarang_js").value = document.getElementById(key + 'satuan').value;
+        document.getElementById("totalHarga_js").value = document.getElementById("hargaBarang_js").value *
+            document.getElementById("jumlahBarang_js").value;
+    }
+
+    document.getElementById("jumlahBarang_js").onchange = function() {
+        document.getElementById("totalHarga_js").value = document.getElementById("jumlahBarang_js").value *
+            document.getElementById("hargaBarang_js").value;
+    }
+
+    function fungsiForm() {
+        var subT = document.getElementById("subTotalForm").value;
+        var subD = document.getElementById("diskonForm").value;
+        document.getElementById("grandTotalForm").value = subT - (subT * subD / 100);
+    }
+
+    function fungsiKembalian() {
+        var subTun = document.getElementById("tunaiForm").value;
+        var subG = document.getElementById("grandTotalForm").value;
+        let kembali = subTun - subG;
+        document.getElementById("kembaliForm").value = kembali;
+    }
+
+    function pembayaranCheck() {
+        inpDisc = document.getElementById("diskonForm").value;
+        inpTunai = document.getElementById("tunaiForm").value;
+        if (inpDisc.length > 0 && inpTunai.length > 0) {
+            document.getElementById('btnSimpan').disabled = false;
+        } else {
+            document.getElementById('btnSimpan').disabled = true;
+        }
+    }
+</script>

@@ -1,0 +1,130 @@
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+<script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+        var options = {
+            damping: '0.5'
+        }
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+</script>
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="assets/js/soft-ui-dashboard.min.js?v=1.0.3"></script>
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="../assets/js/plugins/chartjs.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#scrollTable').DataTable({
+            "lengthMenu": [
+                [25, 50, -1],
+                [25, 50, "All"]
+            ],
+            "scrollX": true,
+            "scrollY": 500,
+            "scrollCollapse": true
+        });
+    });
+
+    $(document).ready(function () {
+        $('#tabelKode').DataTable({
+            "scrollY": 350,
+            "scrollX": true,
+            "scrollCollapse": true,
+            "order": [
+                [0, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#scrollTable2').DataTable({
+            "scrollY": 200,
+            "scrollX": true,
+            "scrollCollapse": true,
+            "order": [
+                [1, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#scrollTable3').DataTable({
+            "scrollY": 550,
+            "scrollX": true,
+            "order": [
+                [1, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#tabelKategori').DataTable({
+            "scrollY": 350,
+            "scrollX": true,
+            "order": [
+                [1, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#tabelSupplier').DataTable({
+            "scrollY": 350,
+            "scrollX": true,
+            "order": [
+                [1, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#tabelEmployee').DataTable({
+            "scrollY": 350,
+            "scrollX": true,
+            "order": [
+                [1, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#tabelLapStock').DataTable({
+            "scrollY": 350,
+            "scrollX": true,
+            "order": [
+                [1, "asc"]
+            ]
+        });
+    });
+
+    $(document).ready(function () {
+        $('#scrollTableViewPembelian').DataTable({
+            "scrollY": 200,
+            "scrollCollapse": true
+        });
+    });
+
+    $('#exampleModalMessage').on('shown.bs.modal', function (e) {
+        $.fn.dataTable.tables({
+            visible: true,
+            api: true
+        }).columns.adjust();
+    });
+
+</script>
